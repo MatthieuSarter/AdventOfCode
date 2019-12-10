@@ -103,10 +103,16 @@ def run_program(program, input_list=[], instruction_pointer=0, pause_on_input=Fa
 
 def convert_program(program):
     # type: (Program) -> NewProgram
+    '''
+    Convert old programs (list) to new programs (dict).
+    '''
     return defaultdict(lambda: 0, enumerate(program))
 
 def run_program_compat(program, return_output = False, input_list=[], instruction_pointer=0, pause_on_input=False):
     # type: (Program, bool, Input, int, bool) -> Tuple[Program, Output, int] or Tuple[Program, Output] or Program
+    '''
+    Executes old programs on the new computer.
+    '''
     program, output, pointer, _ = run_program(convert_program(program), input_list, instruction_pointer, pause_on_input, 0)
 
     program = list(program.values())
