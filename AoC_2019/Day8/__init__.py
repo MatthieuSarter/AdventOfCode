@@ -97,14 +97,14 @@ def day8_res1(image):
     layer = find_layer_with_min_count(image, 0)[0]
     return count_in_layer(layer, 1) * count_in_layer(layer, 2)
 
-def run():
+def run(with_tests: True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         image = parse_image(in_file.read().strip(), 25, 6)
 
     d8p1 = day8_res1(image)
     print(f'Day 8, Part 1 : {d8p1}')  # 1792
 
-    checks_d8p2()
+    if with_tests: checks_d8p2()
 
     print('Day 8, Part 2 : ')  # LJECH
     display_image(image)

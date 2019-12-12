@@ -222,13 +222,13 @@ def checks_d10p2():
     for rank, asteroid in results:
         assert vaporized[rank - 1] == asteroid
 
-def run():
-    checks_d10p1()
+def run(with_tests = True):
+    if with_tests: checks_d10p1()
 
     best_spot, d10p1 = find_best_spot(read_space_map('input'))
     print(f'Day 10, Part 1 : {d10p1}') # 263
 
-    checks_d10p2()
+    if with_tests: checks_d10p2()
 
     vaporized_200 = get_vaporization_list(best_spot, read_space_map('input'))[199]
     d10p2 = 100 * vaporized_200.x + vaporized_200.y

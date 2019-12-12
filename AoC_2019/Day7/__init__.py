@@ -217,19 +217,20 @@ def checks_d7p2():
         assert run_amp_chain_loop(prog, phases) == results
         assert find_best_phases_loop(prog)[0] == phases
 
-def run():
+def run(with_tests = True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         program = ast.literal_eval('[' + in_file.read().strip() + ']')
 
-    checks_d2p1(run_program)
-    checks_d5p2(run_program)
+    if with_tests:
+        checks_d2p1(run_program)
+        checks_d5p2(run_program)
 
-    checks_d7p1()
+        checks_d7p1()
 
     d7p1 = find_best_phases(program)[1]
     print(f'Day 7, Part 1 : {d7p1}')  # 225056
 
-    checks_d7p2()
+    if with_tests: checks_d7p2()
 
     d7p2 = find_best_phases_loop(program)[1]
     print(f'Day 7, Part 2 : {d7p2}')  # 14260332

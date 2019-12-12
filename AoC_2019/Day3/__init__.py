@@ -138,18 +138,18 @@ def checks_d3p2():
         assert get_closest_intersection_wire_length([circuit1.split(','), circuit2.split(',')])[1] == wire_length
 
 
-def run():
+def run(with_tests = True):
     circuits_insts_input = []
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         for line in in_file.readlines():
             circuits_insts_input.append(line.strip().split(','))
 
-    checks_d3p1()
+    if with_tests: checks_d3p1()
 
     d3p1 = get_closest_intersection_manhattan_distance(circuits_insts_input)[1]
     print(f'Day 3, Part 1 : {d3p1}')  # 248
 
-    checks_d3p2()
+    if with_tests: checks_d3p2()
 
     d3p2 = get_closest_intersection_wire_length(circuits_insts_input)[1]
     print(f'Day 3, Part 2 : {d3p2}')  # 28580

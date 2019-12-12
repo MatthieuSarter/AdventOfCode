@@ -57,11 +57,11 @@ def checks_d2p1(intcode_computer):
     for prog, result in zip(progs, results):
         assert intcode_computer(prog) == result
 
-def run():
+def run(with_tests = True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         program = ast.literal_eval('[' + in_file.read().strip() + ']')
 
-    checks_d2p1(run_program)
+    if with_tests: checks_d2p1(run_program)
 
     program[1] = 12
     program[2] = 2

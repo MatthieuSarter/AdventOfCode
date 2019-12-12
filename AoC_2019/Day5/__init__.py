@@ -117,16 +117,16 @@ def checks_d5p2(intcode_computer):
         for param, result in zip(params, results):
             assert intcode_computer(prog, True, [param])[1].pop() == result
 
-def run():
+def run(with_tests = True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         program = ast.literal_eval('[' + in_file.read().strip() + ']')
 
-    checks_d2p1(run_program)
+    if with_tests: checks_d2p1(run_program)
 
     d5p1 = run_program(program, True, [1])[1].pop()
     print(f'Day 5, Part 1 : {d5p1}')  # 9775037
 
-    checks_d5p2(run_program)
+    if with_tests: checks_d5p2(run_program)
 
     d5p2 = run_program(program, True, [5])[1].pop()
     print(f'Day 5, Part 2 : {d5p2}')  # 15586959

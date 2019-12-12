@@ -65,19 +65,19 @@ def checks_d6p2():
     assert path_to_target(test_data, 'YOU', 'SAN') == ['K', 'J', 'E', 'D', 'I']
 
 
-def run():
+def run(with_tests = True):
     data = {}
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         for line in in_file.readlines():
             parent, child = line.strip().split(')')
             data[child] = parent
 
-    checks_d6p1()
+    if with_tests: checks_d6p1()
 
     d6p1 = count_orbits(data)
     print(f'Day 6, Part 1 : {d6p1}')  # 119831
 
-    checks_d6p1()
+    if with_tests: checks_d6p1()
 
     d6p2 = len(path_to_target(data, 'YOU', 'SAN')) - 1;
     print(f'Day 6, Part 2 : {d6p2}')  # 322

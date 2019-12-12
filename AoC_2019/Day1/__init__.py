@@ -53,15 +53,15 @@ def checks_d1p2():
     for mass, fuel in tests.items():
         assert fuel_for_module_2(mass) == fuel
 
-def run():
+def run(with_tests = True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         masses = [int(line.strip()) for line in in_file.readlines()]
 
-    checks_d1p1()
+    if with_tests: checks_d1p1()
     d1p1 = total_fuel(masses, fuel_for_module_1)
     print(f'Day 1, Part 1 : {d1p1}') # 3317970
 
-    checks_d1p2()
+    if with_tests: checks_d1p2()
     d1p2 = total_fuel(masses, fuel_for_module_2)
     print(f'Day 1, Part 2 : {d1p2}') # 4974073
 

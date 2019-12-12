@@ -11,12 +11,8 @@ def run_program(program, input_list=[], instruction_pointer=0, pause_on_input=Fa
     # type: (NewProgram, Input, int, bool, int) -> Tuple[NewProgram, Output, int, int]
     '''
     Executes an intcode program.
-
-    There is now a 'pause' feature, returning the current state of execution when waiting for new input, allowing to
-    restart the program from where it was left when the new input is available. This avoids handling threads...
     '''
     program = program.copy()
-    relative_base = 0
 
     def halt(message):
         print(f'Program: {program}')
@@ -38,7 +34,7 @@ def run_program(program, input_list=[], instruction_pointer=0, pause_on_input=Fa
             halt(f'Parameter {param_number} must be in position or relative mode')
 
     def write_result(instruction, param_number, value):
-        mode = instruction[-param_number - 2:-param_number - 1]
+        mode = instruction[-param_number -2:-param_number - 1]
         if mode == '0':
             program[program[instruction_pointer + param_number]] = value
         if mode == '2':
@@ -136,14 +132,15 @@ def checks_d9p1():
     _, output, _, _ = run_program(convert_program(program))
     assert output.pop() == 1125899906842624
 
-def run():
+def run(with_tests: True):
     with open(os.path.dirname(__file__) + os.sep + 'input.txt', 'r') as in_file:
         program = ast.literal_eval('[' + in_file.read().strip() + ']')
 
-    checks_d2p1(run_program_compat)
-    checks_d5p2(run_program_compat)
+    if with_tests:
+        checks_d2p1(run_program_compat)
+        checks_d5p2(run_program_compat)
 
-    checks_d9p1()
+        checks_d9p1()
 
     d9p1 = run_program(convert_program(program), [1])[1].pop()
     print(f'Day 9, Part 1 : {d9p1}') # 3533056970

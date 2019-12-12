@@ -62,13 +62,13 @@ def checks_d4p2():
     for value, result in results.items():
         assert meets_criteria_2(value) == result
 
-def run():
+def run(with_tests = True):
     checks_d4p1()
 
     d4p1 = len(get_matching_passwords(145852, 616942, meets_criteria_1))
     print(f'Day 4, Part 1 : {d4p1}')  # 1767
 
-    checks_d4p2()
+    if with_tests: checks_d4p2()
 
     d4p2 = len(get_matching_passwords(145852, 616942, meets_criteria_2))
     print(f'Day 4, Part 2 : {d4p2}')  # 1192
