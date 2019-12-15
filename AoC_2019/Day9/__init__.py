@@ -8,11 +8,14 @@ from Day5 import Input, Output, checks_d5p2
 NewProgram = Dict[int, int]
 
 def run_program(program, input_list=[], instruction_pointer=0, pause_on_input=False, relative_base = 0):
-    # type: (NewProgram, Input, int, bool, int) -> Tuple[NewProgram, Output, int, int]
+    # type: (NewProgram or Program, Input, int, bool, int) -> Tuple[NewProgram, Output, int, int]
     '''
     Executes an intcode program.
     '''
-    program = program.copy()
+    if type(program) == list:
+        program = convert_program(program)
+    else:
+        program = program.copy()
 
     def halt(message):
         print(f'Program: {program}')
