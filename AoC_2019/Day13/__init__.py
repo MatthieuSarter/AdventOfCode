@@ -5,7 +5,7 @@ from time import sleep
 from typing import Dict, List
 
 from Day10 import Point
-from Day9 import run_program, NewProgram, convert_program
+from Day9 import run_program, NewProgram
 
 GameMap = Dict[Point, int]
 
@@ -42,7 +42,10 @@ def print_game_map(game_map):
     '''
     Print the game map in text mode
     '''
-    os.system('clear')
+    if sys.platform == 'win32':
+        os.system('cls')
+    else:
+        os.system('clear')
     symbols = [' ', '█', '░', '▬', '●']
     max_x = max([p.x for p in game_map])
     max_y = max([p.y for p in game_map])

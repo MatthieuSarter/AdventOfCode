@@ -3,15 +3,25 @@ import os
 from collections import defaultdict
 from typing import Text, Dict, List, Tuple
 
+Reactions = Dict[Text, Dict[Text, int]]
+Inventory = Dict[Text, int]
 
 def parse_chemical_count(value):
     # type: (Text) -> Tuple[Text, int]
+    '''
+    Converts one member of a formula to a chemical,count pair
+    '''
     count, chemical = value.strip().split(' ')
     chemical = chemical.strip()
     count = int(count.strip())
     return chemical, count
 
 def get_requirements(chemical, count, reactions):
+    # type: (Text, int, Reactions) -> Tuple[Dict[Text, int], int, int]
+    '''
+    Calculates the chemicals required to produce a given amount of a new chemical, the leftover of this new chemical if
+    produced in excess and the ORE directly required for the production.
+    '''
     if count == 0:
         return {}, 0, 0
     if chemical == 'ORE':
@@ -25,6 +35,10 @@ def get_requirements(chemical, count, reactions):
     return requirements, leftover, ore
 
 def get_ore_requirements(chemical, count, reactions, leftovers = None):
+    # type: (Text, int, Reactions, Inventory or None) -> Tuple[int, Inventory]
+    '''
+    Calculates the required ORE to produce a given amount of chemical and the leftover.
+    '''
     ore = 0
     requirements = defaultdict(lambda: 0, {chemical: count})
     if leftovers is None:
@@ -47,14 +61,21 @@ def get_ore_requirements(chemical, count, reactions, leftovers = None):
     return ore, leftovers
 
 def get_fuel_for_ore(ore, reactions):
+    # type: (int, Reactions) -> int
+    '''
+    Calculates the amount of fuel that can be produced with a given quantity of ORE.
+    '''
     fuel = 0
     leftovers = None
     ore_per_fuel = get_ore_requirements('FUEL', 1, reactions, leftovers)[0]
     while ore > 0:
+        # We know we can at least produce 1 FUEL with ore_per_fuel ORE
         min_fuel_possible = max(ore // ore_per_fuel, 1)
+        # but producing that many FUEL may require less ore...
         consumed_ore, leftovers = get_ore_requirements('FUEL', min_fuel_possible, reactions, leftovers)
         ore -= consumed_ore
-        fuel += min_fuel_possible
+        fuel += min_fuel_possible + leftovers['FUEL']
+        leftovers['FUEL'] = 0
     return fuel - 1 # stopped with ore < 0, so produced one more FUEL than possible
 
 def checks_d14p1():
@@ -91,7 +112,7 @@ def run(with_tests = True):
     checks_d14p2()
 
     d14p2 = get_fuel_for_ore(1000000000000, build_reactions_dict('input'))
-    print(f'Day 14, Part 2 : {d14p2}') # 15988
+    print(f'Day 14, Part 2 : {d14p2}') # 8845261
 
 if __name__ == '__main__':
     run()
