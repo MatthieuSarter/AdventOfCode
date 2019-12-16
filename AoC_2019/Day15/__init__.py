@@ -12,8 +12,8 @@ directions = [Point(0, -1), Point(0, 1), Point(-1, 0), Point(1, 0)]
 next_direction = [2, 3, 1, 0] # next_direction[i] is the direction to take if the droid hit the wall when moving in
                               # direction i. This keeps the wall to the right.
 
-def print_map(section_map):
-    # type: (SectionMap) -> None
+def print_map(section_map, droid_position):
+    # type: (SectionMap, Point) -> None
     '''
     Prints the map in text mode.
     '''
@@ -27,11 +27,14 @@ def print_map(section_map):
     ys = [p.y for p in section_map]
     min_y, max_y = min(ys), max(ys)
 
-    symbols = {-2: '░', -1: '█', 1: ' ', 2: '●', 3: '☺'}
+    symbols = {-2: '░', -1: '█', 1: ' ', 2: '●', 3: '¤', 4: '☺'}
     for y in range(min_y, max_y + 1):
         for x in range(min_x, max_x + 1):
-            value = section_map[Point(x, y)]
-            sys.stdout.write(symbols[value])
+            if Point(x, y) == droid_position:
+                sys.stdout.write(symbols[4])
+            else:
+                value = section_map[Point(x, y)]
+                sys.stdout.write(symbols[value])
         print('')
 
 def build_map(program):

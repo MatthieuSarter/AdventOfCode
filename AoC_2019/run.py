@@ -2,7 +2,7 @@ import timeit
 from importlib import import_module
 
 days_times = {}
-for day in range(1, 25):
+for day in range(16, 25):
     try:
         days_times[day] = timeit.timeit(lambda: import_module(f'Day{day}').run(False), number=1)
     except ModuleNotFoundError:

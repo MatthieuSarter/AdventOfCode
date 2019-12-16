@@ -104,12 +104,12 @@ def build_reactions_dict(file):
 
 
 def run(with_tests = True):
-    checks_d14p1()
+    if with_tests: checks_d14p1()
 
     d14p1 = get_ore_requirements('FUEL', 1, build_reactions_dict('input'))[0]
     print(f'Day 14, Part 1 : {d14p1}') # 143173
 
-    checks_d14p2()
+    if with_tests: checks_d14p2()
 
     d14p2 = get_fuel_for_ore(1000000000000, build_reactions_dict('input'))
     print(f'Day 14, Part 2 : {d14p2}') # 8845261
